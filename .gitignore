@@ -21,6 +21,7 @@
 *.pem
 .env.local
 .env
+next.config.mjs
 
 # debug
 npm-debug.log*

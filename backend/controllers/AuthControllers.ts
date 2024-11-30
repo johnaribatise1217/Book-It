@@ -131,7 +131,6 @@ export const forgotPassword = catchAsyncErrors(
 export const resetPassword = catchAsyncErrors(
   async(req : NextRequest, {params} : {params: {token : string}}) => {
     const body = await req.json()
-    console.log()
 
     const user1 = await User.findOne({
       email : body.Email

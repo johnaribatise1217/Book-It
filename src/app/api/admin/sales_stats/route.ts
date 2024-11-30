@@ -1,8 +1,8 @@
 import { createEdgeRouter } from "next-connect";
 import { NextRequest } from "next/server";
-import {newRoom } from "../../../../../backend/controllers/roomControllers";
 import dbConnect from "../../../../../backend/config/dbConnect"
-import { authorizeRoles } from "../../../../../backend/middlewares/auth";
+import { authorizeRoles, isAuthenticatedUser } from "../../../../../backend/middlewares/auth";
+import { getSalesStats } from "../../../../../backend/controllers/BookingController";
 
 interface RequestContext {
   params : {
@@ -13,8 +13,8 @@ interface RequestContext {
 const router = createEdgeRouter<NextRequest, RequestContext>()
 
 dbConnect()
-router.use(authorizeRoles('admin')).post(newRoom)
+router.use(isAuthenticatedUser, authorizeRoles('admin')).get(getSalesStats)
 
-export const POST = async(request : NextRequest, ctx : RequestContext) => {
+export const GET = async(request : NextRequest, ctx : RequestContext) => {
   return router.run(request, ctx)
 }
